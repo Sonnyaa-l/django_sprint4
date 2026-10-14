@@ -1,2 +1,2 @@
-
-# Create your models here.
+"""Модели приложения pages."""
+from django.db import models  # noqa: F401

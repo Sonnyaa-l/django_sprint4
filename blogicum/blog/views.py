@@ -189,16 +189,17 @@ def delete_comment(request, post_id, comment_id):
 def edit_profile(request, username=None):
     """Редактирование профиля."""
     from django.contrib.auth import get_user_model
-    User = get_user_model()
+    from users.forms import UserEditForm
+
+    user_model = get_user_model()
 
     if username is None:
         user = request.user
     else:
-        user = get_object_or_404(User, username=username)
+        user = get_object_or_404(user_model, username=username)
         if request.user != user:
             return redirect('blog:profile', username=username)
 
-    from users.forms import UserEditForm
     form = UserEditForm(
         request.POST or None,
         request.FILES or None,
