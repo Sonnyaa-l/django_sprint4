@@ -1,6 +1,4 @@
-"""
-Django settings for blogicum project.
-"""
+"""Django settings for blogicum project."""
 
 from pathlib import Path
 

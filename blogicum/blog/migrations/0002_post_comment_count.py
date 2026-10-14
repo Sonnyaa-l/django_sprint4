@@ -13,6 +13,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='post',
             name='comment_count',
-            field=models.IntegerField(default=0, verbose_name='Количество комментариев'),
+            field=models.IntegerField(
+                default=0,
+                verbose_name='Количество комментариев'),
         ),
     ]

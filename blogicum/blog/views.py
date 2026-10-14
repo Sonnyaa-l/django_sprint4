@@ -62,6 +62,7 @@ def post_detail(request, post_id):
     }
     return render(request, 'blog/detail.html', context)
 
+
 def category_posts(request, slug):
     """Посты одной категории."""
     category = get_object_or_404(Category, slug=slug, is_published=True)
@@ -129,7 +130,8 @@ def delete_post(request, post_id):
     if request.method == 'POST':
         post.delete()
         return redirect('blog:index')
-    return render(request, 'blog/create.html', {'form': PostForm(instance=post)})
+    return render(request, 'blog/create.html',
+                  {'form': PostForm(instance=post)})
 
 
 @login_required
@@ -181,6 +183,8 @@ def delete_comment(request, post_id, comment_id):
         request, 'blog/comment.html',
         {'comment': comment},
     )
+
+
 @login_required
 def edit_profile(request, username=None):
     """Редактирование профиля."""
