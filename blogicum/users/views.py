@@ -1,3 +1,4 @@
+"""Вьюхи приложения users."""
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -7,10 +8,10 @@ from django.views.generic import CreateView
 
 from .forms import UserEditForm
 
-User = get_user_model()
-
 
 class RegistrationView(CreateView):
+    """Регистрация нового пользователя."""
+
     form_class = UserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'registration/registration_form.html'
@@ -18,13 +19,16 @@ class RegistrationView(CreateView):
 
 @login_required
 def edit_profile(request, username=None):
-    """Редактирование профиля."""
+    """Редактирование профиля пользователя."""
+    user_model = get_user_model()
+
     if username is None:
         user = request.user
     else:
-        user = get_object_or_404(User, username=username)
+        user = get_object_or_404(user_model, username=username)
         if request.user != user:
             return redirect('blog:profile', username=username)
+
     form = UserEditForm(
         request.POST or None,
         request.FILES or None,

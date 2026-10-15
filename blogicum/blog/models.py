@@ -1,3 +1,4 @@
+"""Модели блога."""
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -5,6 +6,8 @@ User = get_user_model()
 
 
 class BaseModel(models.Model):
+    """Абстрактная базовая модель с общими полями."""
+
     is_published = models.BooleanField(
         default=True,
         verbose_name='Опубликовано',
@@ -16,10 +19,14 @@ class BaseModel(models.Model):
     )
 
     class Meta:
+        """Настройки модели."""
+
         abstract = True
 
 
 class Category(BaseModel):
+    """Категория постов."""
+
     title = models.CharField(max_length=256, verbose_name='Заголовок')
     description = models.TextField(verbose_name='Описание')
     slug = models.SlugField(
@@ -30,25 +37,35 @@ class Category(BaseModel):
     )
 
     class Meta:
+        """Настройки модели."""
+
         verbose_name = 'категория'
         verbose_name_plural = 'Категории'
 
     def __str__(self):
+        """Строковое представление категории."""
         return self.title
 
 
 class Location(BaseModel):
+    """Местоположение поста."""
+
     name = models.CharField(max_length=256, verbose_name='Название места')
 
     class Meta:
+        """Настройки модели."""
+
         verbose_name = 'местоположение'
         verbose_name_plural = 'Местоположения'
 
     def __str__(self):
+        """Строковое представление местоположения."""
         return self.name
 
 
 class Post(BaseModel):
+    """Публикация."""
+
     title = models.CharField(max_length=256, verbose_name='Заголовок')
     text = models.TextField(verbose_name='Текст')
     pub_date = models.DateTimeField(
@@ -85,15 +102,20 @@ class Post(BaseModel):
     )
 
     class Meta:
+        """Настройки модели."""
+
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
         ordering = ('-pub_date',)
 
     def __str__(self):
+        """Строковое представление публикации."""
         return self.title
 
 
 class Comment(BaseModel):
+    """Комментарий к публикации."""
+
     text = models.TextField(verbose_name='Текст комментария')
     post = models.ForeignKey(
         Post,
@@ -108,9 +130,12 @@ class Comment(BaseModel):
     )
 
     class Meta:
+        """Настройки модели."""
+
         verbose_name = 'комментарий'
         verbose_name_plural = 'Комментарии'
         ordering = ('created_at',)
 
     def __str__(self):
+        """Строковое представление комментария."""
         return self.text

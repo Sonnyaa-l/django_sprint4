@@ -1,3 +1,4 @@
+"""URL-маршруты приложения blog."""
 from django.urls import path
 
 from . import views
